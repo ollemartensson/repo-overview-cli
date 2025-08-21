@@ -1,12 +1,12 @@
 (ns repo.overview.tool-test
   (:require
-    [clojure.test :refer [deftest is]]
-    [repo.overview.tool :as tool])
+   [clojure.test :refer [deftest is]]
+   [repo.overview.tool :as tool])
   (:import
-    (java.nio.charset
-      StandardCharsets)
-    (java.nio.file
-      Files)))
+   (java.nio.charset
+    StandardCharsets)
+   (java.nio.file
+    Files)))
 
 
 (defn tmpdir
@@ -32,7 +32,7 @@
                   tool/tracked-files (fn [_]
                                        [(.toPath (java.io.File. root "README.md"))
                                         (.toPath (java.io.File. root "src/sample/core.clj"))])]
-      (let [ov (tool/overview {:dir (.getAbsolutePath root)})]
+      (let [ov (tool/edn {:dir (.getAbsolutePath root)})]
         (is (map? ov))
         (is (> (:file-count ov) 0))
         (is (some #(= % "README.md") (:keyfiles ov)) "README should be in keyfiles")
@@ -52,7 +52,7 @@
     (with-redefs [tool/git-root (fn [_] (.getAbsolutePath root))
                   tool/tracked-files (fn [_]
                                        [(.toPath (java.io.File. root "README.md"))])]
-      (tool/print-overview {:dir (.getAbsolutePath root) :out (.getAbsolutePath out)})
+      (tool/markdown {:dir (.getAbsolutePath root) :out (.getAbsolutePath out)})
       (let [s (slurp out)]
         (is (re-find #"# .* — Repository Overview" s))
         (is (re-find #"## Quick Stats" s))))))
@@ -65,7 +65,7 @@
     (with-redefs [tool/git-root (fn [_] (.getAbsolutePath root))
                   tool/tracked-files (fn [_]
                                        [(.toPath (java.io.File. root "a/b/c/d/e.txt"))])]
-      (let [ov (tool/overview {:dir (.getAbsolutePath root) :max-depth 2})
+      (let [ov (tool/edn {:dir (.getAbsolutePath root) :max-depth 2})
             tree (:tree ov)]
         ;; the leaf shouldn't be shown when depth cap is 2
         (is (not (re-find #"e.txt" tree)))

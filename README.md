@@ -10,9 +10,9 @@ clojure -Ttools install io.github.ollemartensson/repo-overview-cli '{:git/tag "v
 ## Usage
 ```bash
 # Print to console
-clojure -Trepo-overview print :dir "."
+clojure -Trepo-overview markdown :dir "."
 # Write to file
-clojure -Trepo-overview print :dir "." :out "OVERVIEW.md"
+clojure -Trepo-overview markdown :dir "." :out "OVERVIEW.md"
 # Get structured data map (for scripts)
-clojure -Trepo-overview overview :dir "."
+clojure -Trepo-overview edn :dir "."
 ```

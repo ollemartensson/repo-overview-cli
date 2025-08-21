@@ -3,7 +3,8 @@
  :paths ["src"]
  :tools/usage
  {:ns-default repo.overview.tool
-  :ns-aliases {ov repo.overview.tool}}
+  :ns-aliases {ov repo.overview.tool}
+  :exec-fn overview}
  :aliases
  {:test {:extra-paths ["test"]
          :extra-deps {io.github.cognitect-labs/test-runner {:git/tag "v0.5.1" :git/sha "dfb30dd"}}
