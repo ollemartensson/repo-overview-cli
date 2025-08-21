@@ -1,0 +1,7 @@
+{:paths ["src"]
+
+ :deps {babashka/fs {:mvn/version "0.5.20"}}
+
+ :tools/usage
+ {:ns-default repo.overview.tool
+  :ns-aliases {ov repo.overview.tool}}}
