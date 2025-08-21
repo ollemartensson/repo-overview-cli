@@ -1,18 +1,27 @@
 (ns repo.overview.tool-test
-  (:require [clojure.test :refer [deftest is]]
-            [repo.overview.tool :as tool])
-  (:import (java.nio.file Files)
-           (java.nio.charset StandardCharsets)))
+  (:require
+    [clojure.test :refer [deftest is]]
+    [repo.overview.tool :as tool])
+  (:import
+    (java.nio.charset
+      StandardCharsets)
+    (java.nio.file
+      Files)))
 
-(defn tmpdir []
+
+(defn tmpdir
+  []
   (-> (Files/createTempDirectory "repo-overview-test" (make-array java.nio.file.attribute.FileAttribute 0))
       (.toFile)))
 
-(defn write! [^java.io.File root rel s]
+
+(defn write!
+  [^java.io.File root rel s]
   (let [p (.toPath (java.io.File. root rel))]
     (Files/createDirectories (.getParent p) (make-array java.nio.file.attribute.FileAttribute 0))
     (Files/write p (.getBytes s StandardCharsets/UTF_8) (make-array java.nio.file.OpenOption 0))
     (.toFile p)))
+
 
 (deftest overview-basic
   (let [root (tmpdir)]
@@ -35,6 +44,7 @@
           (is (contains? langs "Clojure"))
           (is (contains? langs "Markdown")))))))
 
+
 (deftest print-to-file
   (let [root (tmpdir)
         _ (write! root "README.md" "# Title")
@@ -46,6 +56,7 @@
       (let [s (slurp out)]
         (is (re-find #"# .* — Repository Overview" s))
         (is (re-find #"## Quick Stats" s))))))
+
 
 (deftest depth-cap
   (let [root (tmpdir)]
