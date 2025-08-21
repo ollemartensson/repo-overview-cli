@@ -1,12 +1,12 @@
 (ns repo.overview.tool-test
   (:require
-   [clojure.test :refer [deftest is]]
-   [repo.overview.tool :as tool])
+    [clojure.test :refer [deftest is]]
+    [repo.overview.tool :as tool])
   (:import
-   (java.nio.charset
-    StandardCharsets)
-   (java.nio.file
-    Files)))
+    (java.nio.charset
+      StandardCharsets)
+    (java.nio.file
+      Files)))
 
 
 (defn tmpdir

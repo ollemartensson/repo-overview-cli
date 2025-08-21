@@ -1,17 +1,17 @@
 (ns repo.overview.tool
   (:require
-   [clojure.java.io :as io]
-   [clojure.string :as str])
+    [clojure.java.io :as io]
+    [clojure.string :as str])
   (:import
-   (java.lang
-    ProcessBuilder)
-   (java.nio.file
-    FileSystems
-    Files
-    Path
-    Paths)
-   (java.util.stream
-    Stream)))
+    (java.lang
+      ProcessBuilder)
+    (java.nio.file
+      FileSystems
+      Files
+      Path
+      Paths)
+    (java.util.stream
+      Stream)))
 
 
 ;; ---------- config ----------
@@ -236,21 +236,21 @@
 (defn- print-md
   [{:keys [name file-count languages readme-headline tree keyfiles]}]
   (str
-   (format "# %s — Repository Overview\n" name)
-   (when readme-headline (str "\n_Readme:_ " readme-headline "\n"))
-   "\n## Quick Stats\n"
-   (format "- Files tracked (approx): %d\n" file-count)
-   (format "- Top languages: %s\n"
-           (->> languages (take 5)
-                (map (fn [[lang n]] (str lang " (" n ")")))
-                (str/join ", ")))
-   "\n## Key Files & Directories\n"
-   (->> keyfiles (map #(str "- " % "\n")) (apply str))
-   "\n## Structure (max depth capped)\n```text\n" tree "\n```\n"
-   "\n## Notes for LLMs\n"
-   "- Tree is truncated for token efficiency (depth & node caps).\n"
-   "- Prefer README+build files to infer run/build/test.\n"
-   "- For Polylith: look for `components/`, `bases/`, `projects/`, `development/`.\n"))
+    (format "# %s — Repository Overview\n" name)
+    (when readme-headline (str "\n_Readme:_ " readme-headline "\n"))
+    "\n## Quick Stats\n"
+    (format "- Files tracked (approx): %d\n" file-count)
+    (format "- Top languages: %s\n"
+            (->> languages (take 5)
+                 (map (fn [[lang n]] (str lang " (" n ")")))
+                 (str/join ", ")))
+    "\n## Key Files & Directories\n"
+    (->> keyfiles (map #(str "- " % "\n")) (apply str))
+    "\n## Structure (max depth capped)\n```text\n" tree "\n```\n"
+    "\n## Notes for LLMs\n"
+    "- Tree is truncated for token efficiency (depth & node caps).\n"
+    "- Prefer README+build files to infer run/build/test.\n"
+    "- For Polylith: look for `components/`, `bases/`, `projects/`, `development/`.\n"))
 
 
 ;; ---------- public tool API ----------
